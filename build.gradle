@@ -1,0 +1,54 @@
+
+buildscript {
+    ext {
+        springBootVersion = '2.7.17'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+    }
+}
+
+
+all projects {
+    group 'com.demo'
+    version '0.0.1-SNAPSHOT'
+}
+
+
+sub projects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.11
+
+    repositories {
+        mavenCentral()
+    }
+
+
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test' {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+}
+
+project(':module-front') {
+    dependencies {
+        compile project(':module-common')
+    }
+}
+
+project(':module-back') {
+    dependencies {
+        compile project(':module-common')
+    }
+}
+
+
+
